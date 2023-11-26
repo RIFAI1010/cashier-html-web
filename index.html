@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    p{
+      margin: 5px;
+    }
+
+    /**//*bar*//**/
+    .navbar {
+      background-color: rgb(0, 112, 186);
+      padding: 8px;
+      color: white;
+      width: 100%;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+
+    }
+    .itembar {
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5px 0 5px;
+    }
+    .itembar p {
+      font-size: 20px;
+      font-weight: bold;      
+    }
+    .itembar i {
+      cursor: pointer;
+    }
+    .bottombar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      color: white;
+      text-align: right;
+    }
+    .button-payment {
+      background-color: rgb(0, 160, 237);
+      cursor: pointer;
+      color: black;
+      padding: 5px;
+      margin: 10px;
+      font-size: 14px;
+      width: 180px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: none;
+    }
+    .button-payment-content {
+      display: flex;
+      align-items: center;
+      
+    }
+    .button-payment-content-text {
+      flex-direction: column;
+    }
+    .ready{
+      text-align: left;
+      background-color: rgb(0, 112, 186);
+      padding: 5px;
+      font-size: 15px;
+    }
+
+    /**//*content*//**/
+    .content {
+      padding: 5px;
+      padding-top: 40px;
+      display: flex; /* Menggunakan flexbox untuk layout */
+      justify-content: space-between; /* Memberikan ruang antara elemen anak */
+    }
+    .content-cart {
+      width: 27%;
+      min-width: 290px;
+      height: 85vh;
+    }
+    .content-item {
+      margin-left: 5px;
+      width: 73%;
+      height: 85vh;
+    }
+
+    /**//*item*//**/
+    .itemlist-border {
+      height: calc(100% - 6pc);
+      border: 2px solid #999;
+    }
+    .itemlist{
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      max-height: 100%;
+      overflow-y: scroll; /* Menambahkan overflow-y untuk membuat scroll pada itemlist */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .itemlist::-webkit-scrollbar {
+      display: none;
+    }
+    /**//*card-item*//**/
+    .card-item {
+      cursor: pointer;
+      width: 150px; 
+      height: 150px;
+      margin: 5px;
+      border: 2px solid #999;
+      border-radius: 5px;
+      overflow: hidden;
+      text-align: center;
+    }
+    .card-item img {
+      width: 68%;
+      height: 68%; /* Menyesuaikan tinggi gambar sesuai kebutuhan */
+      object-fit: cover;
+      padding-top: 5px;
+
+    }
+    .card-item .card-item-content {
+      padding: 5px 10px 0 10px;
+      text-align: left;
+    }
+
+    .card-item .card-item-content h3 {
+      margin: 0;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .card-item .card-item-content p {
+      text-align: center;
+      font-size: 15px;
+      margin: 0;
+      color: rgb(0, 112, 186);
+      font-weight: bold;
+    }
+
+    /**//*selection*//**/
+    .selection-dropdown {/* Gaya untuk elemen select yang terlihat seperti tombol */
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: rgb(0, 160, 237);
+      color: white;
+      width: 100%;
+    }
+    .selection-dropdown:hover {
+      background-color: rgb(0, 0, 100); /* Warna latar belakang saat hover */
+    }
+
+    /**//*cashier*//**/
+    .cashier{
+      margin-top: 5px;
+      margin-bottom: 5px;
+      padding: 10px;
+      text-align: center;
+      align-items: center;
+      background-color: rgb(0, 160, 237);
+      color: white;
+    }
+
+    /**//*cart*//**/
+    .cartlist-border {
+      height: calc(100% - 15pc);
+      border: 2px solid #999;
+
+    }
+    .cartlist {
+      overflow-y: scroll; /* Menambahkan overflow-y untuk membuat scroll pada cartlist */
+      max-height: 100%;
+      min-height: 100%;
+    }
+    /**//*card-cart*//**/
+    .card-cart {
+      background-color: white;
+      border: 2px solid #999;
+      border-radius: 5px;
+      padding: 10px;
+      display: flex;
+      flex-direction: row;
+      position: relative; /* Menambahkan posisi relatif untuk menempatkan ikon */
+      margin: 0px 5px 10px 5px; /* Menambahkan margin di antara kartu */
+      justify-content: space-between;
+    }
+    .card-cart-text {
+      flex-direction: column;
+      width: 100%;      
+    }
+    .card-cart-icon {
+      cursor: pointer;
+      width: 10%;
+      text-align: center;
+    }
+    .card-cart-row {/* Style untuk baris pada card-cart */
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .cart-btn{
+      background-color: white;
+      border: 1px solid black;
+      width: 25px;
+      height: 25px;
+      font-size: 20px;
+    }
+    .left-text {/* Style untuk teks di kiri */
+      font-weight: bold;
+    }
+
+    /**//*-display-text*//**/
+    .cart-display-text {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-display-text p {
+      font-weight: bold;
+    }
+    .-display-text-cart-row {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 50px;
+    }
+    #total.-display-text-cart-row {
+      background-color: rgb(0, 160, 237);
+      color: white;
+    }
+
+   
+
+    
+
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div>Starbhak Mart</div>
+  </div>
+  <div class="content">
+    <div class="content-cart">
+      <select class="selection-dropdown" id="selection">
+        <option selected>Take Away</option>
+        <option value="1">Dine In</option>
+      </select>
+      <div class="cashier">
+        <i class='bx bxs-user'></i>Mang Jay</div>
+      <div class="cartlist-border">
+        <div class="cartlist">
+        </div>
+      </div>
+      <div class="cart-display-text">
+        <p>Discount:</p>
+        <div class="-display-text-cart-row">
+          <p>Tax:</p>
+          <p id="tax-text">0</p>
+        </div>
+        <div class="-display-text-cart-row" id="total">
+          <p>Total Amount:</p>
+          <p id="total-text">0</p>
+        </div>
+      </div>
+    </div>
+    <div class="content-item">
+      <div class="itembar">
+        <p>item list</p>        
+        <div style="display: flex; margin: 5px 0pc 5px 0;">
+          <input type="text" id="search" style="border: 2px solid black; padding: 5px; margin: 3px; display: none;">
+          <i class='bx bx-search-alt-2 bx-md' id="search-icon" onclick="bar()"></i>         
+          <i class='bx bx-dots-vertical bx-md' ></i>
+          <i class='bx bx-sort bx-md' onclick="sort()"></i>
+        </div>
+      </div>
+      <div class="itemlist-border">
+        <div class="itemlist">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottombar">
+    <button class="button-payment" onclick="printbtn()">
+      <div class="button-payment-content">
+        <i class='bx bx-save bx-sm'></i>
+        <div class="button-payment-content-text">
+          <p>payment</p>
+          <p>(CTRL + P)</p>
+        </div>        
+      </div>
+    </button>
+    <div class="ready">
+      Ready
+    </div>
+  </div>
+</body>
+<script>
+
+  
+// Fungsi yang akan dijalankan saat seluruh halaman dan aset dimuat
+$(window).on('load', function() {
+  showCartList();
+  showItemList();
+});
+
+
+//deklarasi
+var cart = [];
+var dataitem = [
+{ name: 'Egg Sandwich', img: "assets/egg-sandwich.jpeg", price: 25000},
+{ name: 'Ham', img: "assets/ham.jpeg", price: 45000},
+{ name: 'Ham Cheese', img: "assets/ham-cheese.jpeg", price: 40000},
+{ name: 'Veg Burger', img: "assets/veg-burger.jpeg", price: 30000},
+{ name: 'Soda', img: "assets/soda.jpeg", price: 25000},
+{ name: 'Mutton Burger', img: "assets/mutton-burger.jpeg", price: 37000},
+{ name: 'Fish Burger', img: "assets/fish-burger.jpeg", price: 22000},
+{ name: 'Mutton Burger', img: "assets/ham-burger.jpeg", price: 20000},
+{ name: 'Ice Lemon', img: "assets/ice-lemon.jpeg", price: 15000},
+{ name: 'Lassi Salted', img: "assets/lassi-salted.jpeg", price: 18000},
+{ name: 'Mint Lemonade', img: "assets/mint-lemonade.jpeg", price: 17000},
+{ name: 'Mutton Kebab', img: "assets/mutton-kebab.jpeg", price: 27000},
+{ name: 'Green Apple Lemon', img: "assets/green-apple-lemon.jpeg", price: 17000},
+{ name: 'Chicken Burger', img: "assets/chicken-burger.jpeg", price: 25000},
+{ name: 'king Burger', img: "assets/king-burger.jpeg", price: 35000},
+];
+var sortcount = 0;
+var searchToggle = 0;
+var item = dataitem;
+
+
+//fungsi menambahkan
+function addToCart(name, count, price) {
+    //mendapatkan array saat ini
+    var existingItem = cart.find(element => element.name === name);
+    //memeriksa array sudah ada atau belum
+    if (!existingItem) {
+        cart.push({ name: name, count: count, price: price });
+    } else {
+        existingItem.count ++;
+    }
+    showCartList();
+}
+
+
+//fungsi mengurangi
+function minusFromCart(index) {
+  if (cart[index].count == 1) {
+    removeFromCart(index);
+  } 
+  else {
+      cart[index].count --;
+      showCartList();
+  }
+}
+
+//fungsi menghapus
+function removeFromCart(index) {
+  if (confirm("yakin ingin menghapus") == true) {
+    cart.splice(index, 1);
+  }
+  showCartList();
+}
+
+
+//fungsi menambahkan
+function plusFromCart(index) {
+    cart[index].count ++;
+    showCartList();
+}
+
+
+//fungsi menampilkan cart pada html
+function showCartList() {
+  $(".cartlist").empty();
+  cart.forEach(
+    function (cart, index) {
+      var quantity = cart.price * cart.count;
+      $(".cartlist").append(`
+      <div class="card-cart">
+        <div class="card-cart-text">
+          <div class="card-cart-row">
+            <div class="left-text">`+cart.name+`</div>
+            <div>Rp.`+quantity+`</div>
+          </div>
+          <div class="card-cart-row">
+            <div class="left-text">Unit Price:</div>
+            <div>Rp.`+cart.price+`</div>
+            <div class="card-cart-icon" onclick="removeFromCart(`+index+`);">
+              <i class='bx bx-trash bx-sm'></i>
+            </div>
+            <div><button class="cart-btn" onclick="minusFromCart(`+index+`)">-</button></div>
+            <div>`+cart.count+`</div>
+            <div><button class="cart-btn" onclick="plusFromCart(`+index+`)">+</button></div>
+          </div>
+        </div>
+      </div>`
+      )
+    }
+  );
+  //menghitung total
+  var total = 0;
+  for (let i = 0; i < cart.length; i++) {
+      total = total + (cart[i].count * cart[i].price);
+  }
+  var tax = total * 0.1;
+  var aftertax = total + tax;
+  //mencetak total
+  $("#tax-text").text("Rp."+tax);
+  $("#total-text").text("Rp."+aftertax);
+  console.log(cart);
+}
+
+
+//fungsi mencari
+$("#search").on('input', function() {
+  // Menyimpan nilai input ke dalam variabel katakunci
+  var katakunci = $(this).val().toLowerCase(); // Menggunakan toLowerCase() untuk pencarian case-insensitive
+  // Filter array untuk mendapatkan objek yang memiliki properti 'name' mengandung kata kunci
+  item = dataitem.filter(function (obj) {
+      return obj.name.toLowerCase().includes(katakunci);
+  });
+  showItemList();
+});
+
+
+//fungsi menampilkan item pada html
+function showItemList() {
+  $(".itemlist").empty();
+  item.forEach(
+    function (item){
+      $(".itemlist").append(`
+        <div class="card-item" onclick="addToCart('`+item.name+`', 1, `+item.price+`)">
+          <img src="`+item.img+`" alt="">
+          <div class="card-item-content">
+            <h3>`+item.name+`</h3>
+            <p>Rp.`+item.price+`</p>
+          </div>
+        </div>
+        `
+      )
+    }
+  );
+  console.log(item);
+}
+
+
+//fungsi urut
+function sort() { 
+  if (sortcount==0){
+    item.sort(function(a, b){
+      let x = a.name.toLowerCase();
+      let y = b.name.toLowerCase();
+      if (x < y) {return -1;}
+      if (x > y) {return 1;}
+      return 0;      
+    });
+    sortcount ++;
+  } else {
+    item.reverse(function(a, b){
+      let x = a.name.toLowerCase();
+      let y = b.name.toLowerCase();
+      if (x < y) {return -1;}
+      if (x > y) {return 1;}
+      return 0;      
+    });
+    sortcount --;
+  }
+  showItemList();
+}
+
+
+function bar(){
+  $("#search").toggle();
+  if (searchToggle == 0){
+    $("#search-icon").removeClass();
+    $("#search-icon").addClass("bx bxs-search-alt-2 bx-md");
+    searchToggle ++;
+  }else {
+    $("#search-icon").removeClass();
+    $("#search-icon").addClass("bx bx-search-alt-2 bx-md");
+    searchToggle --;
+  }
+}
+
+function printbtn(){
+  window.print();
+}
+
+</script>
+</html>
