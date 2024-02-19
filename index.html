@@ -10,6 +10,7 @@
     body {
       margin: 0;
       padding: 0;
+      user-select: none;
       font-family: Arial, sans-serif;
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -25,11 +26,9 @@
     body::-webkit-scrollbar {
       display: none;
     }
-
     p {
       margin: 5px;
     }
-
     /*bar*/
     .navbar {
       background-color: rgb(0, 112, 186);
@@ -61,13 +60,20 @@
       cursor: pointer;
     }
 
+    .input-search {
+      border: 2px solid black;
+      padding: 5px;
+      margin: 3px;
+      display: none;
+    }
+
     .bottombar {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       color: white;
-      text-align: right;
+      text-align: left;
     }
 
     .button-payment {
@@ -75,9 +81,9 @@
       cursor: pointer;
       color: black;
       padding: 5px;
-      margin: 10px;
-      font-size: 14px;
-      width: 180px;
+      margin-top: 10px;
+      font-size: 12px;
+      width: 140px;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -109,18 +115,22 @@
       /* Menggunakan flexbox untuk layout */
       justify-content: space-between;
       /* Memberikan ruang antara elemen anak */
+
     }
 
     .content-cart {
-      width: 27%;
+      display: none;
+      width: 0%;
       min-width: 290px;
       height: 85vh;
+
     }
 
     .content-item {
       margin-left: 5px;
-      width: 73%;
+      width: 100%;
       height: 85vh;
+
     }
 
     /*item*/
@@ -130,6 +140,7 @@
     }
     .alert {
       text-align: center;
+      margin-top: 100px;
     }
     .itemlist {
       display: flex;
@@ -137,13 +148,26 @@
       flex-direction: row;
       max-height: 100%;
       overflow-y: scroll;
-      /* Menambahkan overflow-y untuk membuat scroll pada itemlist */
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      --sb-track-color: #bbbbbb;
+      --sb-thumb-color: rgb(0, 160, 237);
+      --sb-size: 9px;
+      scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
     }
 
+   
+    
     .itemlist::-webkit-scrollbar {
-      display: none;
+      width: var(--sb-size) 
+    }
+
+    .itemlist::-webkit-scrollbar-track {
+      background: var(--sb-track-color);
+      border-radius: 4px;
+    }
+
+    .itemlist::-webkit-scrollbar-thumb {
+      background: var(--sb-thumb-color);
+      border-radius: 4px;
     }
 
     /*card-item*/
@@ -152,19 +176,34 @@
       width: 150px;
       height: 150px;
       margin: 5px;
-      border: 2px solid #999;
-      border-radius: 5px;
       overflow: hidden;
       text-align: center;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
+      border-radius: 10px;
+      
     }
 
-    .card-item img {
-      width: 68%;
+    .card-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+      
+    }
+    .card-item-img {
+      width: 100%;
       height: 68%;
+    }
+   
+    .card-item img {
+      width: 100%;
+      height: 100%;
       /* Menyesuaikan tinggi gambar sesuai kebutuhan */
       object-fit: cover;
-      padding-top: 5px;
+      
+      transition: transform 0.2s ease-in-out;
+    }
 
+    .card-item:hover img {
+      transform: scale(1.1);
     }
 
     .card-item .card-item-content {
@@ -218,7 +257,7 @@
 
     /*cart*/
     .cartlist-border {
-      height: calc(100% - 15pc);
+      height: calc(100% - 18pc);
       border: 2px solid #999;
 
     }
@@ -228,6 +267,24 @@
       /* Menambahkan overflow-y untuk membuat scroll pada cartlist */
       max-height: 100%;
       min-height: 100%;
+      --sb-track-color: #bbbbbb;
+      --sb-thumb-color: rgb(0, 160, 237);
+      --sb-size: 9px;
+      scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+
+    .cartlist::-webkit-scrollbar {
+      width: var(--sb-size) 
+    }
+
+    .cartlist::-webkit-scrollbar-track {
+      background: var(--sb-track-color);
+      border-radius: 4px;
+    }
+
+    .cartlist::-webkit-scrollbar-thumb {
+      background: var(--sb-thumb-color);
+      border-radius: 4px;
     }
 
     /*card-cart*/
@@ -260,6 +317,9 @@
       /* Style untuk baris pada card-cart */
       display: flex;
       justify-content: space-between;
+      
+    }
+    #row1 {
       margin-bottom: 8px;
     }
 
@@ -269,16 +329,17 @@
       width: 25px;
       height: 25px;
       font-size: 20px;
+      border-radius: 100%;
+      cursor: pointer;
     }
 
-    .left-text {
+    .bold {
       /* Style untuk teks di kiri */
       font-weight: bold;
     }
 
     /*-display-text*/
     .cart-display-text {
-      margin-top: 10px;
       display: flex;
       flex-direction: column;
     }
@@ -290,7 +351,6 @@
     .-display-text-cart-row {
       display: flex;
       justify-content: space-between;
-      padding-right: 50px;
     }
 
     #total.-display-text-cart-row {
@@ -298,8 +358,14 @@
       color: white;
     }
 
+
+    .print-struk{
+      margin-top: 20px;
+      font-size: 30px;
+    }
     .title {
-        text-align: center;
+        text-align: left;
+        width: 50%;
     }
     .line {
         text-align: center;
@@ -318,9 +384,7 @@
     }
     .inf-value {
         width: 50%;
-
     }
-
     .item-name  {
         width: 40%;
     }
@@ -345,6 +409,9 @@
         width: 40%;
         text-align: right;
     }
+    #total-row {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -356,7 +423,7 @@
       <div class="content-cart">
         <select class="selection-dropdown" id="selection">
           <option selected>Take Away</option>
-          <option value="1">Dine In</option>
+          <option value="Dine In">Dine In</option>
         </select>
         <div class="cashier">
           <i class='bx bxs-user'></i>Mang Jay
@@ -365,23 +432,44 @@
           <div class="cartlist">
           </div>
         </div>
+        <div style="margin: 6px; display: flex; align-items: center; border: 2px solid #999; width: 25%; cursor: pointer;" onclick="clearall()">
+          <i class='bx bxs-trash-alt bx-sm'></i>
+          <div style="margin-left: 10px;">Clear All</div>
+        </div>
         <div class="cart-display-text">
           <p>Discount:</p>
           <div class="-display-text-cart-row">
             <p>Tax:</p>
-            <p id="tax-text">0</p>
+            <p id="tax-text">Rp 0</p>
           </div>
           <div class="-display-text-cart-row" id="total">
             <p>Total Amount:</p>
-            <p id="total-text">0</p>
+            <p id="total-text">Rp 0</p>
+          </div>
+          <div class="-display-text-cart-row">
+            <p>Cash:</p>
+            <input type="text" id="int-cash" placeholder="example: 150500" style="border: 2px solid #999; border-radius: 5px; margin-top: 10px;">
           </div>
         </div>
+        <button class="button-payment" onclick="printbtn()" style="border-radius: 8px; float: right;">
+          <div class="button-payment-content">
+            <i class='bx bx-save bx-sm'></i>
+            <div class="button-payment-content-text">
+              <p>payment</p>
+              <p>(CTRL + P)</p>
+            </div>
+          </div>
+        </button>
       </div>
       <div class="content-item">
         <div class="itembar">
-          <p>item list</p>
+          <div style="display: flex; align-items: center;">
+            <i class='bx bxs-cart bx-sm' onclick="cartbtn()"></i>
+            <p>item list</p>
+          </div>
+          <div class="alert-bar"></div>
           <div style="display: flex; margin: 5px 0pc 5px 0;">
-            <input type="text" id="search" style="border: 2px solid black; padding: 5px; margin: 3px; display: none;">
+            <input class="input-search" type="text" id="search">
             <i class='bx bx-search-alt-2 bx-md' id="search-icon" onclick="bar()"></i>
             <i class='bx bx-dots-vertical bx-md'></i>
             <i class='bx bx-sort bx-md' onclick="sort()"></i>
@@ -396,7 +484,7 @@
       </div>
     </div>
     <div class="bottombar">
-      <button class="button-payment" onclick="printContentCart()">
+      <!-- <button class="button-payment" onclick="printbtn()" style="border-radius: 8px;">
         <div class="button-payment-content">
           <i class='bx bx-save bx-sm'></i>
           <div class="button-payment-content-text">
@@ -404,17 +492,22 @@
             <p>(CTRL + P)</p>
           </div>
         </div>
-      </button>
+      </button> -->
       <div class="ready">
         Ready
       </div>
     </div>
   </div>
-  <div class="print-struk" style="display: none; font-size: 30px;">
-    <div class="title">
+  <div class="print-struk" style=" display: none;">
+    <div style="display: flex; text-align: left;">
+      <div class="title">
         <div style="font-weight: bold;">Starbhak Mart</div>
         <div>Jl. Pekapuran</div>
-        <div>false</div>
+        <div id="pemesanan">false</div>
+      </div>
+      <div style="width: 50%; text-align: right;">
+        <img src="assets/tb.png" alt="" style="width: 40%;">
+      </div>
     </div>
     <div class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
     <div class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
@@ -432,34 +525,52 @@
         <div class="row">
             <div class="inf-name">Tgl/Jam</div>
             <div class="inf-titik">:</div>
-            <div class="inf-value" id="inf-datetime">11/30/2023 5:12:15 PM</div>
+            <div class="inf-value" id="inf-datetime">false</div>
         </div>
     </div>
     <div class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
     <div class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+    <div>
+      <div class="row" style="font-weight: bold;">
+        <div class="item-name">Item Name</div>
+        <div class="item-count-price">Price</div>
+        <div class="item-count">Count</div>
+        <div class="item-price">Total</div>
+      </div>  
+    </div>
     <div class="item">
-
+      
     </div>
     <div class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
     <div class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
     <div class="price">
         <div class="row">
-            <div class="price-name">jumlah :</div>
+            <div class="price-name">Amount :</div>
             <div class="price-value" id="price-amount">0</div>
         </div>
         <div class="row">
-            <div class="price-name">Diskon :</div>
+            <div class="price-name">Discount :</div>
             <div class="price-value">0</div>
         </div>
         <div class="row">
-            <div class="price-name">Pajak 10% :</div>
+            <div class="price-name">Tax 10% :</div>
             <div class="price-value" id="price-pajak">0</div>
         </div>
-        <div class="row">
-            <div class="price-name">Total :</div>
+        <div class="row" id="total-row">
+            <div class="price-name">Total Amount :</div>
             <div class="price-value" id="price-total">0</div>
         </div>
+        <div class="row">
+            <div class="price-name">Cash :</div>
+            <div class="price-value" id="price-cash">0</div>
+        </div>
+        <div class="row">
+            <div class="price-name">Change :</div>
+            <div class="price-value" id="price-change">0</div>
+        </div>
     </div>
+    <div class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+    <div class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
     <div class="line">TERIMA KASIH TELAH BERBELANJA</div>
 </div>
 </body>
@@ -488,9 +599,14 @@
     { name: 'Green Apple Lemon', img: "assets/green-apple-lemon.jpeg", price: 17000 },
     { name: 'Chicken Burger', img: "assets/chicken-burger.jpeg", price: 25000 },
     { name: 'king Burger', img: "assets/king-burger.jpeg", price: 35000 },
+    { name: 'Chesses Burger', img: "assets/chesses-burger.jpeg", price: 32000 },
+    { name: 'Fried Chicken', img: "assets/fried-chicken.jpeg", price: 18000 },
+    { name: 'French Fries', img: "assets/french-fries.jpeg", price: 13000 },
+    { name: 'Kebab', img: "assets/kebab.jpeg", price: 17000 },
   ];
   var sortcount = 0;
   var searchToggle = 0;
+  var cartToggle = 0;
   var item = dataitem;
 
 
@@ -502,11 +618,17 @@
     if (!existingItem) {
       cart.push({ name: name, count: count, price: price });
     } else {
-      existingItem.count++;
+      existingItem.count ++;
     }
+    $('.alert-bar').text("berhasi menambahkan " + name);
+    setTimeout(hideAlertBar, 2000);
     showCartList();
   }
 
+  function hideAlertBar(){
+    $('.alert-bar').text("");
+
+  }
 
   //fungsi mengurangi
   function minusFromCart(index) {
@@ -523,14 +645,22 @@
   function removeFromCart(index) {
     if (confirm("yakin ingin menghapus") == true) {
       cart.splice(index, 1);
+      $('.alert-bar').text("berhasi menghapus ");
+    }
+    showCartList();
+  }
+  
+  //fungsi menghapus semua
+  function clearall() {
+    if (confirm("yakin ingin menghapus") == true) {
+      cart.splice(0, cart.length);
     }
     showCartList();
   }
 
-
   //fungsi menambahkan
   function plusFromCart(index) {
-    cart[index].count++;
+    cart[index].count ++;
     showCartList();
   }
 
@@ -544,13 +674,13 @@
         $(".cartlist").append(`
       <div class="card-cart">
         <div class="card-cart-text">
-          <div class="card-cart-row">
-            <div class="left-text">`+ cart.name + `</div>
-            <div>Rp.`+ quantity + `</div>
+          <div class="card-cart-row" id="row1">
+            <div class="bold">`+ cart.name + `</div>
+            <div class="bold">Rp `+ quantity.toLocaleString() + `</div>
           </div>
           <div class="card-cart-row">
-            <div class="left-text">Unit Price:</div>
-            <div>Rp.`+ cart.price + `</div>
+            <div class="bold">Unit Price:</div>
+            <div>Rp `+ cart.price.toLocaleString() + `</div>
             <div id="icon" class="card-cart-icon" onclick="removeFromCart(`+ index + `);">
               <i class='bx bx-trash bx-sm'></i>
             </div>
@@ -564,13 +694,28 @@
         )
       }
     );
-    $("#tax-text").text("Rp." + Ftax());
-    $("#total-text").text("Rp." + Ftotal());
+    $("#tax-text").text("Rp " + Ftax().toLocaleString());
+    $("#total-text").text("Rp " + Ftotal().toLocaleString());
+    printContentCart();
   }
 
+  //fungsi show/hide cart content
+  function cartbtn() {
+    if (cartToggle == 0){
+      $('.content-cart').css("display","block");
+      $('.content-item').css("width","73%");
+      $('.content-cart').css("width","27%");
+      cartToggle ++;
+    }else {
 
-
-//fungsi jumlah
+      $('.content-cart').css("display","none");
+      $('.content-item').css("width","100%");
+      $('.content-cart').css("width","0%");
+      cartToggle --;
+    }
+  }
+ 
+  //fungsi jumlah
   function Famount(){
     var amount = 0;
     for (let i = 0; i < cart.length; i++) {
@@ -578,31 +723,42 @@
     }
     return amount;
   }
-
   //fungsi pajak
   function Ftax(){
     var tax = Famount() * 0.1;
     return tax;
   }
-
   //fungsi ditotal
   function Ftotal(){
     var total = Famount() + Ftax();
     return total;
   }
+  //ufngsi cash
+  function Fcash(){
+    var cash = Number($('#int-cash').val());
+    return cash;
+  }
+  //fungsi kembalian
+  function Fchange(){
+    var change = Fcash() - Ftotal();
+    return change;
+  }
 
   //fungsi mencari
-  $("#search").on('input', function () {
+  $("#search").on('input', function() {
     // Menyimpan nilai input ke dalam variabel katakunci
     var katakunci = $(this).val().toLowerCase(); // Menggunakan toLowerCase() untuk pencarian case-insensitive
     // Filter array untuk mendapatkan objek yang memiliki properti 'name' mengandung kata kunci
     item = dataitem.filter(function (obj) {
       return obj.name.toLowerCase().includes(katakunci);
     });
-    
     showItemList();
   });
-
+  
+  //fungsi cash update
+  $('#int-cash').on('input', function() {
+    showCartList();
+  })
 
   //fungsi menampilkan item pada html
   function showItemList() {
@@ -611,10 +767,13 @@
       function (item) {
         $(".itemlist").append(`
         <div class="card-item" onclick="addToCart('`+ item.name + `', 1, ` + item.price + `)">
-          <img src="`+ item.img + `" alt="">
+          <div class="card-item-img">
+            <img src="`+ item.img + `" alt="">
+          </div>
+          
           <div class="card-item-content">
             <h3>`+ item.name + `</h3>
-            <p>Rp.`+ item.price + `</p>
+            <p>Rp `+ item.price.toLocaleString() + `</p>
           </div>
         </div>
         `
@@ -622,14 +781,9 @@
       }
     );
     console.log(item);
-    if (item.length == 0){
-      $(".alert").show();
-    }
-    else {
-      $(".alert").hide();
-    }
+    if (item.length == 0){ $(".alert").show(); }
+    else { $(".alert").hide(); }
   }
-
 
   //fungsi urut
   function sort() {
@@ -655,7 +809,7 @@
     showItemList();
   }
 
-//show hide search bar
+//show showh/hide search bar
   function bar() {
     $("#search").toggle();
     if (searchToggle == 0) {
@@ -690,27 +844,37 @@
     return formattedDateTime;
   }
 
-  //fungsi untuk print struk
-  function printContentCart() {
-    $(".item").empty();
-    cart.forEach(
-      function(cart){
-        $(".item").append(`
-        <div class="row">
-          <div class="item-name">`+cart.name+`</div>
-          <div class="item-count-price">`+cart.price+`</div>
-          <div class="item-count">`+cart.count+`</div>
-          <div class="item-price">`+cart.price * cart.count+`</div>
-      </div>
-        `)
-      }
-    );
-    $("#price-amount").text(Famount());
-    $("#price-pajak").text(Ftax());
-    $("#price-total").text(Ftotal());
-    $("#inf-datetime").text(showCurrentDateTime());
+  //fungsi untuk button print struk
+  function printbtn() {
     window.print();
   }
-  
+  //fungsi untuk mencetak pada halaman struk
+  function printContentCart() {
+    $(".item").empty();
+    if (cart.length ==0) { $(".item").append(`<div style="text-align: center;">There are no items</div>`); }
+    else {
+      cart.forEach(
+        function(cart){
+          var printtotal = cart.price * cart.count;
+          $(".item").append(`
+          <div class="row">
+            <div class="item-name">`+cart.name+`</div>
+            <div class="item-count-price">`+cart.price.toLocaleString()+`</div>
+            <div class="item-count">`+cart.count+`</div>
+            <div class="item-price">`+printtotal.toLocaleString()+`</div>
+          </div>
+          `)
+        }
+      );
+    }
+    $("#price-amount").text(Famount().toLocaleString());
+    $("#price-pajak").text(Ftax().toLocaleString());
+    $("#price-total").text(Ftotal().toLocaleString());
+    $("#price-cash").text(Fcash().toLocaleString());
+    $("#price-change").text(Fchange().toLocaleString());
+    $("#inf-datetime").text(showCurrentDateTime());
+    $("#pemesanan").text($('#selection').val());
+  }
+
 </script>
 </html>
