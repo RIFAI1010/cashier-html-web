@@ -1,1 +1,1 @@
-page: https://rifai1010.github.io/web-aas-ganjil/
+page: https://rifai1010.github.io/cashier-html-web
